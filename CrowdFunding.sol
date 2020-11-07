@@ -55,6 +55,12 @@ contract CrowdFunding {
         delete donors[_contributorAddress];
     }
     
+    function sent2distribute (address payable _distributeFunding) public {
+        
+        _distributeFunding.send(currentFunds);
+        
+    }
+    
     function campaignStatus() public {
         if (currentFunds < fundingGoal)
             emit checkStatus(currentFunds, "We have not reached our Goal yet");
@@ -63,3 +69,4 @@ contract CrowdFunding {
     }
 
 }
+
