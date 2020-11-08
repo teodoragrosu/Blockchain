@@ -23,7 +23,10 @@ contract CrowdFunding is OwnerProperty {
     event donationRetracted(address _contributorAddress, uint _retractedSum);
     event endCampaign ();
    
-    constructor (uint _fundingGoal) public {
+    constructor (uint _fundingGoal, address payable _distributeFunding) public {
+        
+        distributeFunding = DistributeFunding(_distributeFunding);
+        
         fundingGoal = _fundingGoal;
         currentFunds = 0;
     }
@@ -85,7 +88,7 @@ contract CrowdFunding is OwnerProperty {
         msg.sender.transfer(amount);
     }
     
-    function sent2distribute () public onlyOwner {
+    function sent2distribute () public ownerOnly {
         
         require(
             campaignEnded == true,
